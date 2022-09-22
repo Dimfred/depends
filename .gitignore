@@ -1,0 +1,28 @@
+# GENERAL
+**/build/*
+
+# VSCODE
+.vscode
+.VSCodeCounter
+
+# PYTHON
+**/__pycache__
+**/.pytest_cache
+.hypothesis
+**/try.py
+**/celerybeat-schedule
+
+# NODE JS TS
+**/node_modules/**
+
+# SOLIDITY
+**/cache
+**/artifacts
+**/*coverage*
+**/@openzeppelin/*
+**/gasReporterOutput.json
+
+# DB
+**/*.db
+
+# SUBMODULES
