@@ -12,7 +12,7 @@ authors = ["Dmitrij Vinokour <dimfred.1337@web.de>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-python-acache = {git = "https://github.com/Dimfred/acache.git", rev = "main"}
+python-acache = "^0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
