@@ -3,11 +3,12 @@ name = "python-depends"
 packages = [
     { include="depends", from="." }
 ]
-version = "0.1.0"
+version = "0.1.1"
 description = "A dependency injector as in FastAPI"
 repository = "https://github.com/Dimfred/depends.git"
 homepage = "https://github.com/Dimfred/depends"
 license = "MIT"
+readme = "README.md"
 authors = ["Dmitrij Vinokour <dimfred.1337@web.de>"]
 
 [tool.poetry.dependencies]
