@@ -137,6 +137,50 @@ async def test_calls_to_same_main_can_be_run_in_parallel():
     assert [(1, 2), (3, 4), (5, 6), (7, 8), (9, 10)] == res
 
 
+@pytest.mark.asyncio
+async def test_calls_to_same_main_can_be_run_in_parallel_nested():
+    async def d1(a):
+        await asyncio.sleep(0.2)
+        return a
+
+    async def d2(b, d1_=Depends(d1)):
+        await asyncio.sleep(0.2)
+        return d1_, b
+
+    async def d3(c):
+        await asyncio.sleep(0.2)
+        return c
+
+    async def d4(d, d3_=Depends(d3)):
+        await asyncio.sleep(0.2)
+        return d3_, d
+
+    @inject
+    async def main(
+        a, b, c, d, d1_=Depends(d1), d2_=Depends(d2), d3_=Depends(d3), d4_=Depends(d4)
+    ):
+        return (*d2_, *d4_)
+
+    sw = Stopwatch()
+    res = await asyncio.gather(
+        main(1, 2, 3, 4),
+        main(5, 6, 7, 8),
+        main(9, 10, 11, 12),
+        main(13, 14, 15, 16),
+        main(17, 18, 19, 20),
+    )
+    took = sw()
+
+    assert 0.45 > took
+    assert [
+        (1, 2, 3, 4),
+        (5, 6, 7, 8),
+        (9, 10, 11, 12),
+        (13, 14, 15, 16),
+        (17, 18, 19, 20),
+    ] == res
+
+
 alive = False
 
 
