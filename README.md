@@ -32,6 +32,8 @@ async def main(d1_=Depends(d1), d2_=Depends(d2)):
 Nested dependencies
 
 ```python
+from depends import Depends, inject
+
 async def d1():
     # do some stuff, which takes long
     return "some stuff"
@@ -48,9 +50,11 @@ async def main(d1_=Depends(d1), d2_=Depends(d2)):
     print(d2_)  # some other stuff
 ```
 
-You can also use parameters in your injected function which will be forwarded to you dependencies. The detection is done by name, no type checking is applied here.
+You can also use parameters in your injected function which will be forwarded to your dependencies. The detection is done by name, no type checking is applied here.
 
 ```python
+from depends import Depends, inject
+
 async def d1(a):
     return a
 
@@ -63,9 +67,11 @@ async def main(a, d1_=Depends(d1)):
 assert (await main(1)) == (1, 1)
 ```
 
-Another cool thing is that you can used context managed objects inside an injected function. Like for example a database session.
+Another cool thing is that you can use context managed objects inside an injected function. Like for example a database session.
 
 ```python
+from depends import Depends, inject
+
 async def get_db():
     async with Session() as db:
         yield db
@@ -73,10 +79,10 @@ async def get_db():
 @inject
 async def main(db=Depends(get_db)):
     # do stuff with your async db connection
+    # after the exit the connection will be teared down
 ```
 
 ## TODO
 
-[ ] support sync dependencies (only async rn)
-[ ] replace the caching mechanism with maybe the correct dependency tree
-[ ]
+- [ ] support sync dependencies (only async rn)
+- [ ] replace the caching mechanism with maybe the correct dependency tree
