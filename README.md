@@ -1,12 +1,15 @@
 # python-depends
 
-A dependecy injector as in (FastAPI)[https://pypi.org/project/fastapi/].
+A [FastAPI](https://pypi.org/project/fastapi/) like dependecy injector
 
 ## Install
 
 ```
+# stable
 pip3 install python-depends
-pip3 install git+https://github.com/Dimfred/python-depends.git
+
+# latest
+pip3 install git+https://github.com/Dimfred/depends.git
 ```
 
 ## Examples
