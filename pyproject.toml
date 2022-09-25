@@ -3,7 +3,7 @@ name = "python-depends"
 packages = [
     { include="depends", from="." }
 ]
-version = "0.1.3"
+version = "0.1.4"
 description = "A FastAPI like dependency injector"
 repository = "https://github.com/Dimfred/depends.git"
 homepage = "https://github.com/Dimfred/depends"
