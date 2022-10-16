@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import asyncio
+import copy
 import inspect
 
 from acache import alru_cache
@@ -38,7 +39,13 @@ class Dependencies:
             # doesn't get cached with the next function call, since the
             # Dependency should then be again reinjected.
             # TODO check if it is cached without it
-            key = id(depends.f)
+            key = depends.f
+            override = self.f.dependency_overrides.get(depends.f, None)
+            if override is not None:
+                depends = copy.deepcopy(depends)
+                key = override
+                depends.f = override
+
             if key in self._dependables:
                 dependable = self._dependables[key]
                 # replace the Depends obj with the Dependable

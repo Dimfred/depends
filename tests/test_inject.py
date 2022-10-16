@@ -248,3 +248,29 @@ async def test_teardown_with_generator_with_error():
         await main()  # alive
     except Exception:
         assert not alive  # dead
+
+
+@pytest.mark.asyncio
+async def test_dependency_overrides():
+    async def d1():
+        return 1
+
+    async def d2(d1_=Depends(d1)):
+        return d1_
+
+    async def override():
+        return 2
+
+    @inject
+    async def main(d1_=Depends(d1), d2_=Depends(d2)):
+        return d1_, d2_
+
+    assert (await main()) == (1, 1)
+
+    main.dependency_overrides[d1] = override
+
+    assert (await main()) == (2, 2)
+
+    main.dependency_overrides.clear()
+
+    assert (await main()) == (1, 1)

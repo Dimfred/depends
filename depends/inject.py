@@ -8,6 +8,7 @@ from .dependencies import Dependencies
 def inject(f):
 
     if inspect.iscoroutinefunction(f):
+        setattr(f, "dependency_overrides", {})
 
         @wraps(f)
         async def async_wrapper(*args, **kwargs):
